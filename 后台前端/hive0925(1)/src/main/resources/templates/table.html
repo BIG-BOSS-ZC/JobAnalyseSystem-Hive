@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+    <style>
+        #ttt1{
+            width: 80%;
+            height: auto;
+            font-family: "黑体";
+            color: gray;
+        }
+        #ttt1 tr{
+            height: 26px;
+        }
+        #ttt1 td{
+            border-bottom: 1px solid darkgray;
+            text-align: center;
+        }
+        .buttons{
+            float: right;
+            margin-right: 10%;
+        }
+        .buttons1{
+            width: 80%;
+            margin-left: 10%;
+        }
+    </style>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<div class="buttons1" align="center">
+    每页显示
+    <select id="select">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+    </select>
+    行
+    <input type="text" id="search" placeholder="请输入工作类型" style="margin-left: 50%">
+    <input type="button" value="搜索" onclick="search()">
+</div>
+<table id="ttt1" align="center" cellspacing="0">
+    <tr>
+        <td>工作名称</td>
+        <td>底薪</td>
+        <td>定薪</td>
+        <td>工作经验</td>
+        <td>学历</td>
+        <td>行业</td>
+    </tr>
+
+</table>
+<div class="buttons">
+    第<span id="page"></span>页
+    <input type="button" value="上一页" onclick="before()">
+    <input type="button" value="下一页" onclick="next()">
+    共<span id="countpage"></span>页
+</div>
+
+</body>
+<script>
+    var start = 0;
+    var table = document.getElementById("ttt1");
+    var page=document.getElementById("page");
+    var select=document.getElementById("select");
+    var searchtxt=document.getElementById("search");
+    var countpage=document.getElementById("countpage");
+    sv=select.options[select.selectedIndex].value;
+    shv=searchtxt.value;
+    function cpage(start) {
+        page.innerHTML=start+"";
+    }
+    function search() {
+        sv=select.options[select.selectedIndex].value;
+        shv=searchtxt.value;
+        getTable(start,sv,shv);
+    }
+    select.onchange=function () {
+        sv=select.options[select.selectedIndex].value;
+        getTable(start,sv,shv);
+    }
+    function getTable(start,sv,shv) {
+        console.log(sv);
+        console.log(shv);
+        var str = "<tr>\n" +
+            "        <td>工作名称</td>\n" +
+            "        <td>底薪</td>\n" +
+            "        <td>定薪</td>\n" +
+            "        <td>工作经验</td>\n" +
+            "        <td>学历</td>\n" +
+            "        <td>公司名称</td>\n" +
+            "        <td>行业</td>\n" +
+            "    </tr>";
+        $.get("getItems", {"start": start,"rows":sv,"search":shv}, function (data) {
+            var len = data.items.length;
+            if (len >= 10) {
+                len = sv;
+            }
+            countpage.innerHTML=data.getcount;
+            for (var i = 0; i < len; i++) {
+                str += "<tr>\n" +
+                    "        <td>" + data.items[i].jobname + "</td>\n" +
+                    "        <td>" + data.items[i].minsalary + "</td>\n" +
+                    "        <td>" + data.items[i].maxsalary + "</td>\n" +
+                    "        <td>" + data.items[i].exprience + "</td>\n" +
+                    "        <td>" + data.items[i].edu + "</td>\n" +
+                    "        <td>" + data.items[i].company + "</td>\n" +
+                    "        <td>" + data.items[i].trade + "</td>\n" +
+                    "    </tr>";
+            }
+            table.innerHTML = str;
+        });
+    }
+    function next() {
+        ++start;
+        getTable(start,sv,shv);
+        cpage(start);
+    }
+    function before() {
+        --start;
+        if(start<=0){
+            start=0;
+        }
+        getTable(start,sv,shv);
+        cpage(start);
+    }
+    window.onload=function () {
+        getTable(start,sv,shv);
+        cpage(start);
+    }
+</script>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="/static/js/echarts.min.js"></script>
+		<title>BIG BOSS</title>
+		<link rel="stylesheet" href="/static/css/homepage.css" />
+		<script src="/static/js/echarts.min.js"></script>
+	</head>
+
+	<script>
+		function reinitIframe() {
+			var iframe = document.getElementById("urlIframe");
+			try {
+				var bHeight = iframe.contentWindow.document.body.scrollHeight;
+				var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+				var height = Math.max(bHeight, dHeight);
+				iframe.height = height;
+				iframe.height = bHeight;
+			} catch (ex) {
+			}
+		}
+
+	</script>
+	<body>
+		<table width="100%" height="80px" class="head" id="head1">
+			<tr>
+				<td class="headname" width="30%">BIG BOSS</td>
+				<td><a href="http://localhost:8081">首页</a></td>
+				<td><a href="http://localhost:8081/trend">趋势</a></td>
+				<td><a href="#">发现</a></td>
+				<td><a href="#">言职</a></td>
+				<td><a href="#">联系我们</a></td>
+				<td width="30%"><a href="#">登陆—></a></td>
+			</tr>
+		</table>
+		<div class="bkground">
+			<div class="pp">
+			<span class="p1">你的未来取决于你的选择</span><br>
+			<span class="p2">Your future depends on your choice.</span>
+			</div>
+		</div>
+		<table class="data">
+			<tr>
+				<td width="40%">
+					<div class="dataspan">
+					<span class="s1">1,235,0</span><br />
+					<span class="s2">个大数据岗位</span>
+					</div>
+				</td>
+				<td width="60%">
+					<div class="dataspan2">
+					<p class="s2">不管你是具有丰富从业经验的IT人，还是即将毕业寻求人生
+						第一份工作的应届生，BIG BOSS都将基于大数据分析，为您提供独
+						特且极具成本效益的解决方案</p>
+						<br />
+
+						<span style="color: deepskyblue;">武汉BIG BOSS人力资源服务有限公司</span>
+					
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="map" id="map"></div>
+		<div class="bkground2">
+
+		</div>
+		<div class="tables" id="table1">
+			<iframe class="J_iframe" width="100%" height="600px" name="i" id="ourlIframe" frameborder="0" scrolling="no" src="/table" onload="reinitIframe()"></iframe>
+		</div>
+		<div class="tables" id="salary"></div>
+			<script type="text/javascript">
+			window.onload=function () {
+			$.get("/trend/citysa",function (data) {
+					var dom = document.getElementById("salary");
+					var Chart = echarts.init(dom);
+					var app = {};
+					option = null;
+					app.title = '坐标轴刻度与标签对齐';
+
+					option = {
+						title: {
+							text: '热门城市大数据职业平均薪资'
+						},
+						color: ['#3398DB'],
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis: [
+							{
+								type: 'category',
+								data: data[0],
+								axisTick: {
+									alignWithLabel: true
+								}
+							}
+						],
+						yAxis: [
+							{
+								type: 'value'
+							}
+						],
+						series: [
+							{
+								name: '平均薪资',
+								type: 'bar',
+								barWidth: '60%',
+								data: data[1]
+							}
+						]
+					};
+					Chart.setOption(option, true);
+			})
+			};
+			</script>
+		<div class="tables">
+			
+		</div>
+		<div class="foot">
+			<table class="foottable">
+				<tr>
+					<td width="30%">BIG BOSS</td>
+					<td>博客</td>
+					<td>友情链接</td>
+					<td width="30%">百里半</td>
+				</tr>
+				<tr>
+					<td>@2019</td>
+					<td><a href="#">文档</a></td>
+					<td><a href="#">FAQs</a></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>-</td>
+					<td><a href="#">关于我们</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>客户端</td>
+					<td><a href="#">营业执照</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Android下载</td>
+					<td><a href="#">论坛</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>IOS下载</td>
+					<td><a href="#">条款</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<p class="police">版权所有 © 2019 BIG BOSS 保留所有权利.</p>
+	</body>	
+	<script src="/static/js/homepage.js"></script>
+	<script src="/static/js/jquery-3.4.1.min.js"></script>
+	<script src="http://echarts.baidu.com/asset/map/js/china.js"></script>
+	<script src="/static/js/map.js"></script>
+</html>

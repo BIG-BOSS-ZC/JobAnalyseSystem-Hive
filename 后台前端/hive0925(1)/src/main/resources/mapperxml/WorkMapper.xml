@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hive.demo.dao.WorkMapper">
+
+    <resultMap id="BaseResultMap" type="com.hive.demo.model.CitySa">
+        <result column="cityname" jdbcType="VARCHAR" property="cityname" />
+        <result column="salary" jdbcType="DOUBLE" property="salary" />
+    </resultMap>
+
+
+    <select id="getCitySa" resultType="com.hive.demo.model.CitySa">
+        select * from dashuju;
+    </select>
+
+    <select id="getEduSa" resultType="com.hive.demo.model.CitySa">
+        select * from edusa;
+    </select>
+</mapper>

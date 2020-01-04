@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hive.demo.dao.JobNumMapper">
+
+    <resultMap id="BaseResultMap" type="com.hive.demo.model.JobNum">
+        <result column="jobname" jdbcType="VARCHAR" property="jobname" />
+        <result column="sh" jdbcType="INTEGER" property="sh" />
+        <result column="bj" jdbcType="INTEGER" property="bj" />
+        <result column="gz" jdbcType="INTEGER" property="gz" />
+        <result column="wh" jdbcType="INTEGER" property="wh" />
+        <result column="sz" jdbcType="INTEGER" property="sz" />
+    </resultMap>
+
+
+    <select id="getJobNum" resultType="com.hive.demo.model.JobNum">
+        select * from namecity
+    </select>
+
+    <!--<select id="geCount" resultType="java.lang.Integer">
+        select * from namecity
+    </select>-->
+
+
+</mapper>
